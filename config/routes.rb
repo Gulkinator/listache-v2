@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :lists
 
   post "lists/:id/add" => "list#add_item"
+  delete "list/:id/item" => "lists#delete_item"
+  
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

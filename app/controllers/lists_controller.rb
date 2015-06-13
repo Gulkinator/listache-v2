@@ -76,6 +76,21 @@ class ListsController < ApplicationController
 	end
 end
 
+  #DELETE /lists/1/bananas
+  def delete_item
+	respond_to do |format|
+		item = params [:item]
+		@list.list_items.delete item
+		if @list.save
+			format.html { render :edit, notice: (item + "- successfully removed!" ) }
+			format.json { render :show, status: :ok, location: @list }
+		else
+			format.html { render :edit }
+			format.json { render json: @list.errors, status: :unprocessable_entity }
+		end
+	end
+end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_list
