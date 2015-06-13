@@ -2,5 +2,19 @@
 
 <%= render 'form' %>
 
+<hr/>
+
+<%= form_for @list, url : {action: "add_item"}, method: "post" do | if | %>
+
+<div class="field">
+</div>
+
+<label for="new-time">Add a List Item</label>
+<input type="text" id="new-item" name="title"/>
+<div class="actions">
+	<button type="submit">Add</button>
+</div>
+<% end %>
+
 <%= link_to 'Show', @list %> |
 <%= link_to 'Back', lists_path %>
