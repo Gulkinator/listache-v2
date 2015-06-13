@@ -60,6 +60,21 @@ class ListsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  #POST /lists/1/add
+  def add_item
+	respond_to do |format|
+		item = params[:item]
+		@list.list_items = @list.list_items ? @list.list_items.push(item) ; [item]
+		if @list.save
+			format.html { render :edit, notice: (item + "- successfully added!" ) }
+			format.json { render :show, status: :ok, location: @list }
+		else
+			format.html { render :edit }
+			format.json { render json: @list.errors, status: :unprocessable_entity }
+		end
+	end
+end
 
   private
     # Use callbacks to share common setup or constraints between actions.
