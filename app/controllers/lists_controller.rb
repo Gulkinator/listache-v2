@@ -66,7 +66,7 @@ class ListsController < ApplicationController
   def add_item
 	respond_to do |format|
 		item = params[:item]
-		@list.list_items = @list.list_items ? @list.list_items.push(item) ; [item]
+		@list.list_items = @list.list_items ? @list.list_items.push(item) : [item]
 		if @list.save
 			format.html { render :edit, notice: (item + "- successfully added!" ) }
 			format.json { render :show, status: :ok, location: @list }

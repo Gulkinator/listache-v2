@@ -3,12 +3,26 @@
 <head>
   <title>Listache</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'default', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
+<header class="app-header">
+<div class="container">
+	<div class="row">
+		  <div class="col-sm-8 col-sm-push-2 text-center">
+			<%= image_tag "listache.png", width: "400"%>
+		</div>
+	</div>
+</div>
+</header>
+<main class="container">
+	<div class="row">
+		<div class="col-sm-8 col-sm-push-2">
+			<%= yield %>
+		</div>
+	</div>
+</main>
 
 </body>
 </html>
