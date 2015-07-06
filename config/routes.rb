@@ -1,19 +1,21 @@
 Rails.application.routes.draw do
 
   devise_for :users
-root 'lists#index'
   
-  resources :lists
+	root "lists#index"
 
-  post "lists/:id/add" => "list#add_item"
-  delete "list/:id/item" => "lists#delete_item"
-  
-  
+	resources :lists
+
+	post 'lists/:id/add' => 'lists#add_item'
+	delete 'lists/:id/:item' => 'lists#delete_item'
+	get 'lists/:id/send' => 'lists#send_form', as: "send_form"
+	post 'lists/:id/send' => 'lists#send_list'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  
+  # root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

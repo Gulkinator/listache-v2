@@ -13,23 +13,48 @@
  *= require_tree .
  *= require bootstrap
  *= require bootstrap-theme
+ *= require font-awesome.min
  *= require_self
- 
  */
+
 body {
-    background-color: white;
+    background-color: #ffffff;
 }
+
 .app-header {
-    background-color: black;
-    padding: 5rem 0;
+    background-color: #000000;
+    padding:0px;
     margin-bottom: 2rem;
+	color:#ffffff;
+	margin-left:auto;
+	margin-right:auto;
+	font-size: 8rem;	
 }
+
 .display-list .lead {
     margin-bottom: 0;
 }
+
 .display-list .list-group-item {
     padding: 20px;
 }
+
 h1, h2, h3 {
     color: #434f46;
+}
+
+.brand-header {
+	color:#ffffff;
+	font-size: 8rem;	
+
+}
+
+.fa-shopping-cart{
+	font-size: 8rem;
+	
+}
+
+.fa-shopping-cart:before {
+	content: "\f07a";
+	
 }

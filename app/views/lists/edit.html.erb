@@ -2,19 +2,38 @@
 
 <%= render 'form' %>
 
+<%= link_to 'Show', @list, class: "btn btn-default" %>
+<%= link_to 'Back', lists_path, class: "btn btn-default" %>
+<%= link_to 'Send to a Friend', send_form_path(@list.id), class: "btn btn-primary" %>
+
 <hr/>
 
-<%= form_for @list, url : {action: "add_item"}, method: "post" do | if | %>
-
-<div class="field">
-</div>
-
-<label for="new-time">Add a List Item</label>
-<input type="text" id="new-item" name="title"/>
-<div class="actions">
-	<button type="submit">Add</button>
-</div>
+<h3>Add a new List Item</h3>
+<%= form_for @list, url: {action: "add_item"}, method: "post" do |f| %>
+	<div class="input-group">
+	  <input type="text" id="new-item" name="item" class="form-control"/>
+	<span class="input-group-btn">
+		<button type="submit" class="btn btn-success">Add!</button>
+	</span>
+	</div>
 <% end %>
 
-<%= link_to 'Show', @list %> |
-<%= link_to 'Back', lists_path %>
+<hr/>
+
+<% if @list.list_items? %>
+	<h3>Remove Items from this list</h3>
+	<div class="list-group display-list">
+	  <% @list.list_items.each do |item| %>
+		  <div class="list-group-item">
+			<div class="lead">
+			  <%= item %>
+			  <div class="pull-right">
+				<%= link_to 'Remove', item, method: :delete, class: "btn btn-default text-danger" %>
+			  </div>
+			</div>
+		  </div>
+	  <% end %>
+	</div>
+<% end %>
+
+

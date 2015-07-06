@@ -1,14 +1,13 @@
 class ListsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_list, only: [:show, :edit, :update, :destroy, :add_item, :delete_item]
-  before_action :confirm_owner, only: [:show, :edit, :update, :destroy, :add_item, :delete_item]
-
+  before_action :set_list, only: [:show, :edit, :update, :destroy, :add_item, :delete_item, :send_form, :send_list]
+  before_action :confirm_owner, only: [:show, :edit, :update, :destroy, :add_item, :delete_item, :send_form, :send_list]
 
   # GET /lists
   # GET /lists.json
   def index
-	@list = List.new(user_id:current_user)
-    @lists = List.where user_id: current_user.id
+	  @list = List.new(user_id: current_user)
+	  @lists = List.where user_id: current_user.id
   end
 
   # GET /lists/1
@@ -29,7 +28,7 @@ class ListsController < ApplicationController
   # POST /lists.json
   def create
     @list = List.new(list_params)
-
+	@list.user_id = current_user.id
     respond_to do |format|
       if @list.save
         format.html { redirect_to @list, notice: 'List was successfully created.' }
@@ -64,36 +63,49 @@ class ListsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
-  #POST /lists/1/add
-  def add_item
-	respond_to do |format|
-		item = params[:item]
-		@list.list_items = @list.list_items ? @list.list_items.push(item) : [item]
-		if @list.save
-			format.html { render :edit, notice: (item + "- successfully added!" ) }
-			format.json { render :show, status: :ok, location: @list }
-		else
-			format.html { render :edit }
-			format.json { render json: @list.errors, status: :unprocessable_entity }
-		end
-	end
-end
 
-  #DELETE /lists/1/bananas
+  # POST /lists/1/add
+  def add_item
+	  respond_to do |format|
+		  item = params[:item]
+		  @list.list_items = @list.list_items ? @list.list_items.push(item) : [item]
+		  if @list.save
+			  format.html { render :edit, notice: (item + ' - successfully added!') }
+			  format.json { render :show, status: :ok, location: @list }
+		  else
+			  format.html { render :edit }
+			  format.json { render json: @list.errors, status: :unprocessable_entity }
+		  end
+	  end
+  end
+
+  # DELETE /lists/1/bananas
   def delete_item
-	respond_to do |format|
-		item = params [:item]
-		@list.list_items.delete item
-		if @list.save
-			format.html { render :edit, notice: (item + "- successfully removed!" ) }
-			format.json { render :show, status: :ok, location: @list }
-		else
-			format.html { render :edit }
-			format.json { render json: @list.errors, status: :unprocessable_entity }
-		end
-	end
-end
+	  respond_to do |format|
+		  item = params[:item]
+		  @list.list_items.delete item
+		  if @list.save
+			  format.html { render :edit, notice: (item + ' - successfully removed!') }
+			  format.json { render :show, status: :ok, location: @list }
+		  else
+			  format.html { render :edit }
+			  format.json { render json: @list.errors, status: :unprocessable_entity }
+		  end
+	  end
+  end
+
+  def unauthorized
+  end
+
+  def send_form
+  end
+
+  def send_list
+	  to_email = params['to_email']
+	  message = params['message']
+	  ListMailer.email_list(@list, current_user.email, to_email, message).deliver
+	  redirect_to @list, notice: "Your list has been sent!"
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -104,10 +116,10 @@ end
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
       params[:list].permit(:title)
-    end
+	end
 
-	#Confirm the current user has access.
+  	# confirm the current user actually has access
 	def confirm_owner
-		redirect_to lists_url if current_user.id != @list.user_id
+		render :unauthorized if current_user.id != @list.user_id
 	end
 end
