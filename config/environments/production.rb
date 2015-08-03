@@ -80,12 +80,12 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'making-groceries.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-		  :enable_starttls_auto => true,
-		  :address => "smtp.gmail.com",
-		  :port => 587,
-		  :domain => ENV['GMAIL_DOMAIN'],
-		  :authentication => :login,
-		  :user_name => ENV['GMAIL_USERNAME'],
-		  :password => ENV['GMAIL_PASSWORD']
-  }
+    address: "smtp.sendgrid.net",
+    port: 25,
+    domain: "heroku.com", 
+    authentication: "plain",
+    enable_starttls_auto: true,
+    user_name: ENV["SENDGRID_USERNAME"],
+    password: ENV["SENDGRID_PASSWORD"]
+}
 end
