@@ -1,18 +1,18 @@
-#Making Groceries
+# Making Groceries
 
-###Description
+### Description
 A Simple CRUD application that allows users to manage multiple itemized grocery lists.
 
-###Ruby version
+### Ruby version
   2.1.0
 
-###Database
+### Database
   This project uses SQLite3 in the dev environment and PostgreSQL in the production enviroment.
 
-###Services
+### Services
   Devise for user management and authentication. Figaro for enviroment variable management.
 
-###Deployment instructions
+### Deployment instructions
   Clone repository.
   Set up database.
   Set up environment variables
