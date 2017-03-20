@@ -23,7 +23,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Devise: used for user authentication
-gem 'devise'
+gem 'devise','=3.4.1'
 
 # Figaro: used for environment variables
 gem 'figaro'
